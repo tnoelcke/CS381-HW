@@ -37,7 +37,10 @@ four = Succ three
 --   >>> pred three
 --   Succ (Succ Zero)
 --   
-pred = undefined
+pred :: Nat -> Nat
+pred Zero = Zero
+pred (Succ n) = n
+
 
 
 -- | True if the given value is zero.
@@ -48,7 +51,9 @@ pred = undefined
 --   >>> isZero two
 --   False
 --
-isZero = undefined
+isZero :: Nat -> Bool
+isZero Zero = True
+isZero _ = False
 
 
 -- | Convert a natural number to an integer.
@@ -59,7 +64,9 @@ isZero = undefined
 --   >>> toInt three
 --   3
 --
-toInt = undefined
+toInt :: Nat -> Int
+toInt Zero = 0
+toInt (Succ n) = 1 + toInt n
 
 
 -- | Add two natural numbers.
@@ -76,8 +83,10 @@ toInt = undefined
 --   >>> add two three == add three two
 --   True
 --   
-add = undefined
-
+add :: Nat -> Nat -> Nat
+add Zero n = n
+add n Zero = n
+add n m = add (pred n) (Succ m)
 
 -- | Subtract the second natural number from the first. Return zero
 --   if the second number is bigger.
@@ -94,7 +103,10 @@ add = undefined
 --   >>> sub one three
 --   Zero
 --
-sub = undefined
+sub :: Nat -> Nat -> Nat
+sub Zero n = Zero
+sub n Zero = n
+sub (Succ n) (Succ m) = sub n m
 
 
 -- | Is the left value greater than the right?
@@ -108,8 +120,13 @@ sub = undefined
 --   >>> gt two two
 --   False
 --
-gt = undefined
-
+gt :: Nat -> Nat -> Bool
+gt n m =
+ if n == m 
+  then False
+  else if (sub n m) == Zero 
+   then False
+   else True
 
 -- | Multiply two natural numbers.
 --
@@ -125,7 +142,10 @@ gt = undefined
 --   >>> toInt (mult three three)
 --   9
 --
-mult = undefined
+mult :: Nat -> Nat -> Nat
+mult Zero _ = Zero
+mult _ Zero = Zero
+
 
 
 -- | Compute the sum of a list of natural numbers.
