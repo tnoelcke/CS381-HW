@@ -79,7 +79,8 @@ rightmost (Node _ _ r) = rightmost r
 --   9
 --
 maxInt :: Tree -> Int
-maxInt t = rightmost t
+maxInt (Leaf i) = i
+maxInt (Node n l r) = maximum [(maxInt r),  (maxInt l), n]
 -- | Get the minimum integer from a binary tree.
 --
 --   >>> minInt (Leaf 3)
@@ -98,7 +99,9 @@ maxInt t = rightmost t
 --   1
 --
 minInt :: Tree -> Int
-minInt t = leftmost t
+minInt (Leaf i) = i
+minInt (Node n l r) = minimum [(minInt l), (minInt r), n]
+
 
 
 -- | Get the sum of the integers in a binary tree.
@@ -134,7 +137,9 @@ sumInts (Node t r l) = t + sumInts r + sumInts l
 --   >>> preorder t2
 --   [6,2,1,4,3,5,8,7,9]
 --   
-preorder = undefined
+preorder :: Tree -> [Int]
+preorder (Leaf n) = [n] 
+preorder (Node n l r) = n:(preorder l) ++ (preorder r)
 
 
 -- | The list of integers encountered by an in-order traversal of the tree.
@@ -151,7 +156,9 @@ preorder = undefined
 --   >>> inorder t2
 --   [1,2,3,4,5,6,7,8,9]
 --   
-inorder = undefined
+inorder :: Tree -> [Int]
+inorder (Leaf n) = [n]
+inorder (Node n l r) = (inorder l) ++ [n] ++ (inorder r)
 
 
 -- | Check whether a binary tree is a binary search tree.
@@ -168,7 +175,13 @@ inorder = undefined
 --   >>> isBST t2
 --   True
 --   
-isBST = undefined
+isBST :: Tree -> Bool
+isBST (Leaf i) = True
+isBST (Node n l r) = (n > (nextVal l)) && (n < (nextVal r)) && isBST l && isBST r
+
+nextVal :: Tree -> Int
+nextVal (Leaf n) = n
+nextVal (Node n _ _) = n
 
 
 -- | Check whether a number is contained in a binary search tree.
@@ -186,4 +199,17 @@ isBST = undefined
 --   >>> inBST 10 t2
 --   False
 --   
-inBST = undefined
+inBST :: Int -> Tree -> Bool
+inBST j (Leaf i) = j == i
+inBST j (Node i l r) =
+ if j == i
+  then True
+  else if j < i 
+   then inBST j l 
+   else inBST j r
+
+
+
+
+
+
