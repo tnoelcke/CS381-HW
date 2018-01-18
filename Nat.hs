@@ -145,6 +145,8 @@ gt n m =
 mult :: Nat -> Nat -> Nat
 mult Zero _ = Zero
 mult _ Zero = Zero
+mult a (Succ Zero) = a
+mult a b = add a (mult a (sub b (Succ Zero)))
 
 
 
@@ -159,7 +161,8 @@ mult _ Zero = Zero
 --   >>> toInt (sum [one,two,three])
 --   6
 --
-sum = undefined
+sum :: [Nat] -> Nat
+sum [] = Zero
 
 
 -- | An infinite list of all of the *odd* natural numbers, in order.
