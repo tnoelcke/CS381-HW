@@ -163,6 +163,8 @@ mult a b = add a (mult a (sub b (Succ Zero)))
 --
 sum :: [Nat] -> Nat
 sum [] = Zero
+sum (a:b) = add a (sum b)
+
 
 
 -- | An infinite list of all of the *odd* natural numbers, in order.
@@ -173,4 +175,13 @@ sum [] = Zero
 --   >>> toInt (sum (take 100 odds))
 --   10000
 --
-odds = undefined
+odds :: [Nat]
+odds = filter isOdd nums
+
+nums :: [Nat]
+nums = Zero : map (Succ) nums
+
+isOdd:: Nat -> Bool
+isOdd Zero = False
+isOdd x = not ((mod (toInt x) 2) == 0)
+
