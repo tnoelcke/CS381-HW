@@ -176,12 +176,11 @@ sum (a:b) = add a (sum b)
 --   10000
 --
 odds :: [Nat]
-odds = filter isOdd nums
+odds = oddsFunc one
 
-nums :: [Nat]
-nums = Zero : map (Succ) nums
 
-isOdd:: Nat -> Bool
-isOdd Zero = False
-isOdd x = not ((mod (toInt x) 2) == 0)
+oddsFunc :: Nat -> [Nat]
+oddsFunc n = n : oddsFunc (add n two)
+
+
 
