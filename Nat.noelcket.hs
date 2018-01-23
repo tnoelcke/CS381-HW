@@ -6,6 +6,16 @@ import Prelude hiding (Enum(..), sum)
 --
 -- * Part 2: Natural numbers
 --
+-- Students in Group:
+-- 
+-- ONID ID     Full Name
+-- --------    ---------------
+-- douglbre    Brennan Douglas
+-- noelcket    Thomas Noelcke
+-- <update>    <update>
+
+
+
 
 -- | The natural numbers.
 data Nat = Zero

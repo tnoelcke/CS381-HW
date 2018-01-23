@@ -4,6 +4,14 @@ module Tree where
 --
 -- * Part 1: Binary trees
 --
+--
+-- Students in Group:
+-- 
+-- ONID ID     Full Name
+-- --------    ---------------
+-- douglbre    Brennan Douglas
+-- noelcket    Thomas Noelcke
+-- <update>    <update>
 
 -- | Integer-labeled binary trees.
 data Tree = Node Int Tree Tree   -- ^ Internal nodes
