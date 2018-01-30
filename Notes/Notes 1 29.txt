@@ -1,0 +1,77 @@
+Notes FOR CS381 1/29/2018
+
+Abstract syntax vs. concrete syntax.
+
+- Abstract syntax: captures the essential structure of programs
+- What we use when defining the semantics.
+
+Concrete Syntax:
+- What is actually written down.
+- Linear
+- What we use when writing prorams.
+
+Parsing:
+- Takes concrete input and returns abstract syntax tree.
+
+Typically several steps:
+- Lexical analysis: chunck caracters.
+- generate parse tree: Parse into intermediate concrete syntax tree.
+- convert to AST: convert parse tree into AST.
+
+Not covered in this class.
+
+We assume we have AST's already.
+
+In verse of parsing is called pretty printing.
+This takes a AST and produces concrete syntax.
+- This is good for debuging and serialzation.
+
+In HW we will be implimenting the minilogo syntax. We will also be creating a pretty printer.
+Abstract grammer vs concrete grammer.
+
+t E ::= true 
+	|	false
+	| not t
+	| if t t t 
+	
+T e term ::= true
+		|	 False
+		|	not t
+		|	if t then t else t
+		| (t)
+Our focuse is on abstrat syntax trees even if it looks like text.
+
+Abstract Grammer b e ::= true | false
+
+t e term ::= not t 
+		|	if t t t
+		| b
+easy to go from AST to haskell
+
+Haskell lets us directly implement data types.
+
+data term = not Term
+	| if Term Term Term
+	| Lit Bool
+haskell values
+	Lit True
+	If(Lit True)
+	(Lit False)
+	(Lit True)
+Not(Not (Lit False))
+
+Nice correspondence between AST and haskell.
+
+taking a grammer and translating into haskell
+
+Strategy: Grammar -> Haskell
+- For each basic non-termial, choose a built- in type
+- for each other nonterminal define a data type
+- for each produciton define a data constructor.
+- the nontermials in the production determine the arguments of the constructor.
+
+In grammers s::= t* is shorthand for s::= e|tx or s ::=|t, s
+can translate any of these into haskell list
+s
+		|	Lit Int
+
