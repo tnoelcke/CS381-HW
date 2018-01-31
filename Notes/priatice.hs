@@ -50,6 +50,42 @@ ex2 = [PushN 3, PushN 4, Equ, IfThenElse [PushN 5, PushN 6, Add][PushB false]]
 getAdd2 -> Num -> Num -> Prog
 genAdd2 x y = [PushN x, PushN y, Add, Add]
 
+-- Continued on 1/31/2018
+-- Notes Continuing from last lecture.
+-- HW Info:
+-- Pretty printing to concrete syntax should traverse abstract syntax Should output
+-- concrete syntax with pluses instead of add.
 
 --5. write a haskell function that takes a list of Integers and takes a StackLang program that sums them all up.
-genSum = undefined
+genSum :: [Int] -> Prog
+genSum [] = [PushN 0] 
+genSum (x:xs) = genSum x ++ [PushN x, Add]
+
+
+
+-- genSum (x:xs) = [PushN x, Add] ++ genSum xs
+-- good idea but not quite. It doesn't generate the correct commands
+-- [PushN 1, Add] -- NO GOOD!
+-- genSum[] = [PushN 0] !Same error change recursion order.
+
+
+
+
+-- genSum (x:xs) = [PushN x, Add, genSum x]
+-- Good idea but type error
+
+
+--Semantics: Will do later!
+
+
+
+
+
+
+
+
+
+
+
+
+
