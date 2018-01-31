@@ -33,40 +33,44 @@ type Prog = [Cmd]
 
 -- mode ::= down | up	Pen status
 
-type Mode = Down
-		  | Up
-          deriving(Show, Eq)
-		  
+data Mode = Down | Up
+          deriving(Show, Eq)  
 
 -- expr ::= var				variable ref
 --		|	num				literal number
 --		|	expr + expr		addition expression
 
 
-type Expr = Var Var
-		  | Num Num
-		  | Add Expr Expr
-		  deriving(Eq, Show)
+data Expr = Var Var
+          | Num Num
+          | Add Expr Expr
+          deriving(Eq, Show)
 
 -- cmd ::=  pen mode					Change pen mode
 --		|	move (expr, expr)			move pen to new position		  
 --		|	define macro (var*) {prog}	Define a macro
 --		|	call macro ( expr*) 		invoke a macro
 
-type Cmd = Pen Mode
-        |  Move Expr, Expr
-		|  Define Macro [Var] Prog
-		|  Call Macro [Expr]
+data Cmd = Pen Mode
+        |  Move Expr Expr
+        |  Define Macro [Var] Prog
+        |  Call Macro [Expr]
+        deriving(Eq, Show)
 
 
 -- 2. Define a MiniLogo macro line (x1, y1, x2, y2) that draws a line.
-line :: Macro
-line = Define Macro [x1, y1, x2, y2] [Move x1 y1, Pen Down, Move x1 y2, Move x2 y2, Move x2 y1, Move x1 y1] 
+line :: Cmd
+line = Define "line" ["x1", "y1", "x2", "y2"] 
+        [Pen Up,   Move (Var "x1") (Var "y1"), 
+        Pen Down, Move (Var "x2") (Var "y2")] 
 
 
 -- 3. use the line macro you just defined a new minilogo macro nix (x, y, w, h)
 -- this function will draw a big X from the origin (x, y) your definition
 -- should not contain any move commands.
+nix :: Cmd
+nix = Define "nix" 
+
 
 -- 4. Define a haskell function steps :: Int -> Prog that constructs
 -- a MiniLogo program that draws a staircase of n steps starting form (0, 0).
