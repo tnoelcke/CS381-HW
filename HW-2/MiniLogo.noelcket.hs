@@ -90,23 +90,23 @@ nix = Define "nix" ["x", "y", "w", "h"]
 -- steps :: Int -> Prog
 
 steps :: Int -> Prog
-steps 1 = [Pen Up, Move (Num x) (Num x),
-           Pen Down, Move (Num x)(Num (succ x)), Move (Num (succ x)) (Num succ x)),
-           Pen Up]
-steps i = 
+steps 1 = [Pen Up, Move (Num 0) (Num 0),
+           Pen Down, Move (Num 0) (Num 1), Move (Num 1) (Num 1)]
+steps i = steps (i - 1) ++ [Move (Num (i - 1)) (Num i), Move (Num i) (Num i)] 
 
 
 -- 5. Define a Haskell function macros that returns a list of the names of all the
 -- macros that are defined anywhere in a given MiniLogo program. Don't worry about duplicates.
 
--- macros :: Prog -> [Macro]
+macros :: Prog -> [Macro]
+macros = undefined
 
 
 -- 6. Define a haskell function pretty that pretty prints a MiniLogo program. that is it
 -- transforms the abstract syntax into nicely formatted concrete syntax (as string of characters). 
 -- These should look like the examples in the HW write up.
 
--- pretty -> Prog -> String
+pretty :: Prog -> String
 
 -- BOUNUS PROBELMS
 
