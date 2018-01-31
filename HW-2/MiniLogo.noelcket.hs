@@ -65,11 +65,27 @@ line = Define "line" ["x1", "y1", "x2", "y2"]
         Pen Down, Move (Var "x2") (Var "y2")] 
 
 
--- 3. use the line macro you just defined a new minilogo macro nix (x, y, w, h)
--- this function will draw a big X from the origin (x, y) your definition
--- should not contain any move commands.
+-- Use the line you just defined to define a new MiniLogo macro nix(x, y, w, h)
+-- That draws a big "X" if width w and height h starting from position
+--(x,y). your definition should not contain any move commands.
+--  -   Write the macro in minilogo concrete syntax and include this definition in
+--      In a comment in your submission. 
+--
+--  Define Macro nix (x, y, w, h) {
+--      pen up; move(x, y);
+--      pen down; move(x + w, y + h)
+--      pen up; move(x + w, y)
+--      pen down; move(x, y + h);
+--  }
+--
+--  -   encode the marcro definition as  a Haskell value representing the abstract syntax of the definition.
+
 nix :: Cmd
-nix = Define "nix" 
+nix = Define "nix" ["x", "y", "w", "h"]
+                   [Pen Up, Move (Var "x") (Var "y"),
+                   Pen Down, Move (Add (Var "x") (Var "h")) (Add (Var "y") (Var "w"))
+                   Pen Up, Move Var "x" (Add(Var "y") (Var "w")
+                   Pen Down, Move (Add (Var "x") (Var "h")) (Var "y")]
 
 
 -- 4. Define a haskell function steps :: Int -> Prog that constructs
