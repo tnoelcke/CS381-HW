@@ -72,26 +72,29 @@ line = Define "line" ["x1", "y1", "x2", "y2"]
 --      In a comment in your submission. 
 --
 --  Define Macro nix (x, y, w, h) {
---      pen up; move(x, y);
---      pen down; move(x + w, y + h)
---      pen up; move(x + w, y)
---      pen down; move(x, y + h);
+--      call line(x, y, x + w, y + h);
+--      call line(x + w, y, x, y + h); 
 --  }
 --
 --  -   encode the marcro definition as  a Haskell value representing the abstract syntax of the definition.
 
 nix :: Cmd
 nix = Define "nix" ["x", "y", "w", "h"]
-                   [Pen Up, Move (Var "x") (Var "y"),
-                   Pen Down, Move (Add (Var "x") (Var "h")) (Add (Var "y") (Var "w"))
-                   Pen Up, Move Var "x" (Add(Var "y") (Var "w")
-                   Pen Down, Move (Add (Var "x") (Var "h")) (Var "y")]
+                   [Call "line" [Var "x", Var "y", Add (Var "x") (Var "w"), Add (Var "y") (Var "h")],
+                    Call "line" [Var "x", Add (Var "y") (Var "h"), Add (Var "x") (Var "w"), Var "y"]]
 
 
 -- 4. Define a haskell function steps :: Int -> Prog that constructs
 -- a MiniLogo program that draws a staircase of n steps starting form (0, 0).
 
 -- steps :: Int -> Prog
+
+steps :: Int -> Prog
+steps 1 = [Pen Up, Move (Num x) (Num x),
+           Pen Down, Move (Num x)(Num (succ x)), Move (Num (succ x)) (Num succ x)),
+           Pen Up]
+steps i = 
+
 
 -- 5. Define a Haskell function macros that returns a list of the names of all the
 -- macros that are defined anywhere in a given MiniLogo program. Don't worry about duplicates.
