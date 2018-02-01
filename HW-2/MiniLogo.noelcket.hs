@@ -100,14 +100,19 @@ steps i = steps (i - 1) ++ [Move (Num (i - 1)) (Num i), Move (Num i) (Num i)]
 
 macros :: Prog -> [Macro]
 macros [] = []
-macros [Define s _ p:xs] = [s] ++ macros p ++ macros xs
-
+macros ((Define mac _ _) : c) = mac : macros c
+macros ((Pen _) : c )           = macros c
+macros ((Move _ _): c )         = macros c
+macros ((Call _ _): c )         = macros c
 
 -- 6. Define a haskell function pretty that pretty prints a MiniLogo program. that is it
 -- transforms the abstract syntax into nicely formatted concrete syntax (as string of characters). 
 -- These should look like the examples in the HW write up.
 
 pretty :: Prog -> String
+Pretty []= ""
+Pretty ((Pen p):cmds = "pen " ++ case p of
+                                    Up -> "up;"
 
 -- BOUNUS PROBELMS
 
