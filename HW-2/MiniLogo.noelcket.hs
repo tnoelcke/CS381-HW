@@ -99,7 +99,8 @@ steps i = steps (i - 1) ++ [Move (Num (i - 1)) (Num i), Move (Num i) (Num i)]
 -- macros that are defined anywhere in a given MiniLogo program. Don't worry about duplicates.
 
 macros :: Prog -> [Macro]
-macros = undefined
+macros [] = []
+macros [Define s _ p:xs] = [s] ++ macros p ++ macros xs
 
 
 -- 6. Define a haskell function pretty that pretty prints a MiniLogo program. that is it
