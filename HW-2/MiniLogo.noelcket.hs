@@ -111,18 +111,8 @@ macros ((Call _ _): c )         = macros c
 
 pretty :: Prog -> String
 Pretty []= ""
-Pretty ((Pen p):cmds = "pen " ++ case p of
-                                    Up -> "up;"
+Pretty ((Pen p):c = "pen " ++ (case p of
+                                Up -> "up; "
+                                Down -> "down; ") ++ pretty c  
 
--- BOUNUS PROBELMS
-
--- 7. Define a Haskell function optE that partially evaluates expressions by replacing
--- any additions of literals with the result.
-
--- optE -> Expr -> Expr
-
--- 8. Define a Haskelll function optP that optimizes all of the expressions contained in a given
--- program using optE.
-
--- optP :: Prog -> Prog
 
