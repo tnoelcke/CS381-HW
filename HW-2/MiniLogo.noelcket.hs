@@ -100,24 +100,38 @@ steps i = steps (i - 1) ++ [Move (Num (i - 1)) (Num i), Move (Num i) (Num i)]
 
 macros :: Prog -> [Macro]
 macros [] = []
-macros [Define s _ p:xs] = [s] ++ macros p ++ macros xs
-
+macros ((Define mac _ _) : c) = mac : macros c
+macros ((Pen _) : c )           = macros c
+macros ((Move _ _): c )         = macros c
+macros ((Call _ _): c )         = macros c
 
 -- 6. Define a haskell function pretty that pretty prints a MiniLogo program. that is it
 -- transforms the abstract syntax into nicely formatted concrete syntax (as string of characters). 
 -- These should look like the examples in the HW write up.
 
 pretty :: Prog -> String
+pretty []= ""
+pretty ((Pen p):c ) = "pen " ++ (case p of
+                                Up -> "up;\n"
+                                Down -> "down;\n") ++ pretty c
+pretty ((Move l r) : c) = "move(" ++ prettyExpr l ++ ", " ++ prettyExpr r ++ ");" 
+        ++ "\n" ++ pretty c
+pretty ((Define name args prog) : c) = "define " ++ show name ++ " (" 
+        ++ prettyArgs args ", " ++ ") {\n" ++ pretty prog ++ "}\n" ++ pretty c
+pretty ((Call name args) : c) = "call (" ++ prettyArgs (map prettyExpr args) ", " ++ ");\n" ++ pretty c
 
--- BOUNUS PROBELMS
 
--- 7. Define a Haskell function optE that partially evaluates expressions by replacing
--- any additions of literals with the result.
+-- Helper function that takes an expression and turns it
+-- into a string. Essentially this pretty prints an expression to concrete syntax
+prettyExpr :: Expr -> String
+prettyExpr (Var a) = a 
+prettyExpr (Num a) = show a
+prettyExpr (Add l r) = prettyExpr l ++ " + " ++ prettyExpr r 
 
--- optE -> Expr -> Expr
 
--- 8. Define a Haskelll function optP that optimizes all of the expressions contained in a given
--- program using optE.
+--Helper function that pretty prints a list
+prettyArgs :: [String] -> String ->[Char]
+prettyArgs [] _ = ""
+prettyArgs (x:xs) s = x ++ s ++ prettyArgs xs s
 
--- optP :: Prog -> Prog
 
