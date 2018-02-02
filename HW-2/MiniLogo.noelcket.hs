@@ -110,9 +110,28 @@ macros ((Call _ _): c )         = macros c
 -- These should look like the examples in the HW write up.
 
 pretty :: Prog -> String
-Pretty []= ""
-Pretty ((Pen p):c = "pen " ++ (case p of
-                                Up -> "up; "
-                                Down -> "down; ") ++ pretty c  
+pretty []= ""
+pretty ((Pen p):c ) = "pen " ++ (case p of
+                                Up -> "up;\n"
+                                Down -> "down;\n") ++ pretty c
+pretty ((Move l r) : c) = "move(" ++ prettyExpr l ++ ", " ++ prettyExpr r ++ ");" 
+        ++ "\n" ++ pretty c
+pretty ((Define name args prog) : c) = "define " ++ show name ++ " (" 
+        ++ prettyArgs args ", " ++ ") {\n" ++ pretty prog ++ "}\n" ++ pretty c
+pretty ((Call name args) : c) = "call (" ++ prettyArgs (map prettyExpr args) ", " ++ ");\n" ++ pretty c
+
+
+-- Helper function that takes an expression and turns it
+-- into a string. Essentially this pretty prints an expression to concrete syntax
+prettyExpr :: Expr -> String
+prettyExpr (Var a) = a 
+prettyExpr (Num a) = show a
+prettyExpr (Add l r) = prettyExpr l ++ " + " ++ prettyExpr r 
+
+
+--Helper function that pretty prints a list
+prettyArgs :: [String] -> String ->[Char]
+prettyArgs [] _ = ""
+prettyArgs (x:xs) s = x ++ s ++ prettyArgs xs s
 
 
