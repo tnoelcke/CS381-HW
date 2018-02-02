@@ -1,0 +1,46 @@
+2/2/2018 CS 381 notes.
+
+Today in class we are going over different solutions to the HW and quiz problems.
+
+1a. Type error b. type error. Correct!
+Type of a data consructor is a fuction that takes a data type ane retunrs a different data type.
+c.Value->Bool d. Int -> Value. Pretty sure I got these correct.
+
+data Maybe a = Just a | Nothing.
+Data consructors build structured values so we can undo the consruction using pattern matching.
+A. Write a haskell value of type Tree that represents a tree.
+
+Node 4 (Node 3 (Node 2 Nil Nil) Nil)
+	(Node 5 Nil Nil)
+
+I also got this one correct. I must have missed something in the last problem.
+This is similar to midterm question. However it will be more compoicated.
+
+b. Write a function that counds the number of node values in a tree.
+nils:: Tree -> Int
+nils Nil = 1
+nils (Node _ l r) = nils l + nils r
+
+My fuction was much more complicated. I didn't realize you could patern match on Nils and still have it be considered a tree.
+I should probably look at the data constructor and make sure that Nil is a valid tree.
+
+Tree = Node | Nil
+
+pratice problem 15. from piazza.
+15 map (add 3) . map ok
+
+map ok 
+map a -> b -> [a] -> [b]
+
+map ok = [int] -> [result] is the type.
+
+map (add 3)
+(add 3) result -> result
+
+map add (3) = [result] -> [result] 
+f * g, gout  = fin
+fin = [result]
+gout = [result]
+
+so this is from [Result] -> [Result]
+

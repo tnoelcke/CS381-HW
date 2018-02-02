@@ -28,14 +28,15 @@ data Exp = Lit Int
 
 ex1 = mul(Lit 2) (Add (Lit 3) (Lit 4))  --2*(3+4) => 14
 ex2 = Equ ex1 (Lit 10)                  --ex1 == 10 => False
-ex3 = If ex1 (Lit 5) (Lit 6)            --ex2 == ex1 ? 5:6 => Type Error!
+ex3 = If ex1 (Lit 5) (Lit 6)            --ex2 == ex1 ? 5:6 => Type Error! 
 
 --2. Identify/define the semantic domain for this lang
 --  * what types of values can we have?
 --  *  How can we express this in Haskell?
 --  * semantic domain - set of values a program can have.
 
--- defines the semantic domain.
+-- defines the semantic domain or denominational semantics. This captures all the possible results
+-- or our language.
 data Value = I Int
            | B Bool
            | TypeError
@@ -55,7 +56,7 @@ data Value = I Int
 
 
 -- 3. Define the semantic function.
--- maps AST's to Values.
+-- maps AST's to Values. Here we are giving meaning to to the lang.
 sem :: Exp -> Value
 sem (Lit i)    = I i
 sem (Add l r)  = case (sem l, sem r) of
@@ -67,16 +68,33 @@ sem (Equ l r)  = case (sem l, sem r) of
                     (I i, I j) -> B ( i == j)
                     (B b, B c) -> B ( b == c)
                     _ -> TypeError
--- do this next time
-sem (If c t e) = Undefined
+sem (If c t e) = case sem c of 
+                    B b -> If b then sem t else sem e
+                    _ -> TypeError
+                    
+-- We've created the semantics for this simple expression language.
 
-
-
--- B(l == r)
-
-
+-- 4. Syntactic sugar.
+-- Goal: extend the syntax of our language with the following operation:
 -- * boolean literals
+-- * integer negation
+-- * boolean negation (not)
+-- * conjunction (and)
+-- * disjunction (or)
+-- 
+-- implementing these in our simple language wouldn't be to bad but if our language was
+-- large it would make writing the compiler much harder.
+-- static sugar extends the syntax of the language with out changing the semantics. We are going
+-- to produce Haskell functions that produce the AST.
 
+true :: Expr
+true = Equ (Lit 0) (Lit 0)
+
+false :: Expr
+false = Equ(Lit 1) (Lit) 0
+
+neg :: Exp -> Expr
+neg e = Mul(Lit (-1)) (e
 
  
           
