@@ -51,8 +51,8 @@ draw p = let (_,ls) = prog p start in toHTML ls
 --
 cmd :: Cmd -> State -> (State, Maybe Line)
 cmd (Pen m) (_, pt) = ((m, pt), Nothing)
-cmd (Move x y) (Down, pt) = ((Down, (m1, m2)), Just((pt), (m1, m2)))
-cmd (Move x y) (Up, pt) = ((Up, (x, y)), Noting)
+cmd (Move x y) (Down, pt) = ((Down, (x, y)), Just((pt), (x, y)))
+cmd (Move x y) (Up, pt) = ((Up, (x, y)), Nothing)
 
 
 
@@ -64,7 +64,16 @@ cmd (Move x y) (Up, pt) = ((Up, (x, y)), Noting)
 --   >>> prog (steps 2 0 0) start
 --   ((Down,(2,2)),[((0,0),(0,1)),((0,1),(1,1)),((1,1),(1,2)),((1,2),(2,2))])
 prog :: Prog -> State -> (State, [Line])
-prog = undefined
+prog cmds st = progH cmds (st, [])
+
+
+progH :: Prog -> (State, [Line]) -> (State, [Line])
+progH [] s = s
+progH (x:xs) (s, ls) = 
+                  let (nst, nln) = cmd x s in 
+                   case nln of
+                            Just nln -> progH xs (nst, ls ++ [nln])
+                            Nothing -> progH xs (nst, ls)
 
 
 --
