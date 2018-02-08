@@ -1,0 +1,90 @@
+Noes For CS 381 2 7 2018.
+
+HW WORK ON IT.
+
+
+Support Files DON'T SUBMIT THE SUPPORT FILES unless you want to do something fancy with the redner file.
+
+What si the meaning of a program?
+Formal Specifications:
+	Denotational sematics: Relates tersm directly to values.
+	Operational Semanatics: describes how to evaluate a term.
+	Axiomatic sematics: Describes the effects of evaluating a term.
+	... many others.
+
+Informal/non-specifications
+	reference implementation: execute/compile program in some implementation
+	community/designer intution: how people "think" a program should behave.
+
+Advangages of formilizing your sematics.
+	is a simpler than an implementation, mor precise than intution
+		can answer: is this implementation correct?
+
+Supports the definition of analyes and transformations.
+	prove properties about the language.
+	prove properties about programs.
+
+Promotes better language design.
+	better understand the impact of design decisions
+	apply semantic insights to improve the language design.
+
+Comp serp an interesting example of the above where the proofs are
+mechanically checked.
+
+Denotational semantics:
+	A denotation semantics relates each term to a denotation.
+	term - an abstract syntaxtree. Denotation - a value semantic domain.
+Semantic domains: Captures the set of possible meanings of a program/term.
+	what is a meaning? - it depends on the language!
+language	boolean value
+Arithmetic expressions	Integer
+Imperative lang		function.
+
+1. Define the AST
+2. Identify or define the semantic domain, v
+3. define the valuation function.
+
+Example: simple arithmetic expressions.
+SEE int bool lang for more complete example.
+
+desirable properties of a denotational semantics
+	Compositionality: A program's denotation is built from the denotations of its parts.
+		-supports modular reasoning.
+		-supports proo fby structural induction -- this sound hard...
+	Completeness: every value in the semantic domain is denoted by some program
+		- ensures that sematic domain and language align.
+		- if not, language has expressieness gaps, or semantic domain is too general.
+	soundness: if two programs are equivalent than they have the same denotation.
+		- Equivalence: e.g. by some syntactic rule or law
+		- ensures the equivalence relation and denotational symantics.
+		- Compositionality: a program's denotation is build from the denotations of its parts.
+
+Example: Move language.
+
+A language describing movements on a 2d plane.
+	- a setp is an n-unit horizontal or vertial movement.
+	- a move is described by an sequence of steps.
+data Dir = N | S | E | W
+dtat Step = GO Dir Int
+type Move = [Step]
+
+[Go N 3, GO E 4, GO S 1].
+
+Simantic domain is a function from one point to another point.
+
+type Pos = (Int, Int)
+Domain Pos -> Pos
+
+Valuation function (Step)
+
+step :: Step -> Pos -> Pos
+step (Go N k) = \(x, y) -> (x, y + k)
+step (Go S k) = \(x, y) -> (x, y - k)
+step (Go E k) = \(x, y) -> (x + k, y)
+step (Go E k) = \(x, y) -> (x - k, y)
+
+move :: Move -> Pos -> Pos
+move [] = \p -> p
+move(s:m) = move 
+
+//Will finish next time.

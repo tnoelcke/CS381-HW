@@ -87,15 +87,68 @@ sem (If c t e) = case sem c of
 -- static sugar extends the syntax of the language with out changing the semantics. We are going
 -- to produce Haskell functions that produce the AST.
 
-true :: Expr
+true :: Exp
 true = Equ (Lit 0) (Lit 0)
 
 false :: Expr
-false = Equ(Lit 1) (Lit) 0
-
-neg :: Exp -> Expr
-neg e = Mul(Lit (-1)) (e
+false = Equ(Lit 1) (Lit 0)
+ 
+ 
+ --stopped here last time picked up again on 2.7.2018
+ --integer negation.
+neg :: Exp -> Exp
+neg e = Mul (Lit (-1)) e
 
  
-          
-         
+ --boolean negation.
+ -- example let e = Add (Lit 3) (Lit 4)
+ -- neg e
+ -- Mul (Lit(-1)) (Add (Lit 3) (Lit 4))
+ -- Mul takes an AST and returns a negated AST.
+not :: Exp -> Exp
+not e = If e false true
+ 
+ -- conjunction (And)
+ -- if e evalutes to true return false else return true.
+and :: Exp -> Exp -> Exp
+and l r If l r false
+
+-- disjunction (Or)
+or::Exp -> Exp -> Exp
+or l r = If l true r
+-- or l r = If l l r
+-- good idea but could be slow if L is large.
+
+-- Example that uses synatical suger.
+
+
+--uses all the syntatic sugar.
+ex4 :: Exp
+
+-- Syntactic suger is great untill we need to report errors because it makes for long trees of constructs that are not so simple.
+-- We may pay some complexity cost in order to produce useful error messages.
+
+-- *Statically type Stuff*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
