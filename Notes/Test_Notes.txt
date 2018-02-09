@@ -1,0 +1,149 @@
+Notes on the Exam 2/9/2018
+
+In calss today we went over the exam these are the notes that are a result of this
+discussion.
+
++ 1.5 points on the midterm exam.
+Page One C.
+
+C. distance . Walk True
+
+I got this one wrong
+
+distance . (Walk True)
+
+L: Move -> Int
+R: Bool -> Int -> Mov
+we gave it a bool so: Int -> Mov
+
+Fin = Gout
+Mov == Mov True
+so this type is *Int -> Int*
+flip execute origin
+flip: (a->b->c) b -> a -> c
+-- flips the arguments of the function.
+
+
+flip :: (a-> b -> c) -> b -> a -> c
+flip f x y = f y x
+
+flip execute origin
+
+(flip execute) origin
+
+exectue type = flip ? 
+yes
+Move -> Pos -> Pos
+Pos -> Mov -> Pos
+
+origin = Pos *Move -> Pos*
+
+Part 2. Functional Programming
+data | Tree = Red Int Tree
+	| Blue Tree Tree
+	| Leaf
+
+sum :: Tree -> Int
+sumRed Leaf = 0
+sum (red i t) = i + sumRed(t)
+sum Blue r l = sumRed(r) + sumRed(l)
+
+redTree:: [Int] -> Tree
+redTree [] = Leaf
+redTree (i:is)  = Red i (redTree is)
+
+or 
+redTree = foldr Leaf Red  --another way togo.
+
+I really need to go get my exam and make sure that I didn't get unfairly marked down.
+
+Part 3. d. X dogs chase cats and cats chase mice.
+
+
+data Sent = NV Noun Verb
+	| NVN Noun Verb Noun
+	| If Sent Sent
+data Noun = AN Adj Noun
+	| And Noun Noun
+	| Cats
+	| Dogs
+	| Mouse
+
+data Adj = Lazy | 
+
+DID NOT DO WELL ON THIS SECTION.
+
+Notes from class on 2/9/2018.
+
+More on Compositionality
+
+A programs denoation is buildt from the denotations of its parts.
+
+Implications:
+	- The valuation function is probably recurisve
+	- We need different valuation functions for each syntatic category (Type of AST)
+
+Example of Mov lang:
+1. AS.
+2. Define the Denotational symantics.
+	- Pos -> Pos
+3. Valuation Function. (Step)
+	-Maps AST values to the Symantic Domain.
+	-For MOve lang we don't need to define a function for direction.
+	-you don't always need Valuation function for every element if they are primative.
+mov valuation function 
+mov :: MOve -> Pos -> Pos
+mov[] = \p -> p
+mov (s:m) = move m .step s --yay function comp!
+
+Often multiple interpretations (Semanatics) of the same language
+
+one Declarative spec, used to:
+	- Initialize the databse.
+	- geerate APIs 
+	- validate queries
+	- normalize layout
+	- ... 
+This is fairly common in many programs.
+Static symatics - type checking.
+Dynamic symantics - runs the program.
+compiler- antoher semantics.
+
+Distance traveled.
+type Dist = Int
+dstep :: Step -> Int
+dstep (Go _ k) = k
+dmove :: Move -> Int
+dmove [] = 0
+dmove (s:m) = dstep s + dmove m
+
+Combined trip information
+trip :: Move -> Pos -> (Dist, Pos)
+trip m = \p (dmove m, move m p)
+
+Picking the right semantic domain (1/2)
+simple semantic domains can be combined in two ways.
+	sum: contains a value from one domain to the other
+		- IntBool language can evaluate to Int or Bool
+		- use Haskell Either a b or define a new data type.
+	product: Contains a value from both domains
+		- eg combined trip information for move lang
+		- use haskell (a, b) or define a enw data type.
+(2/2)
+	Can errors occur?
+		-use haskell maybe or define a new data type.
+	Does the lang manipulate state or use names?
+		- use a function type.
+Example statful domaines
+	Read-only state: State -> Value
+	modify as only effect: State -> State
+	modify as side effect: State -> (State, Value)
+
+
+
+
+
+
+
+
+
