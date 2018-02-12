@@ -77,7 +77,53 @@ genSum (x:xs) = genSum x ++ [PushN x, Add]
 
 --Semantics: Will do later!
 
+-- 2 - 12 - 2018 Notes
 
+-- Reviewed stack lang language.
+--6. Identify/define the semantics domain for the Cmd and for Prog
+-- things we can encounter:
+--      * Numbers
+--      * Stack
+--      * Boolean
+-- * Errors 
+--     * type error
+--     * stack underflow error
+-- data Either a b  = Left a | Right b
+
+
+-- stack
+type Stack = [Either Num Bool]
+
+-- stigmatics of a command
+type Domain = Stack -> Maybe Stack
+
+--7. Define the semantics of StackLang command (ignore If at first)
+
+cmd :: Cmd -> Stack -> Maybe Stack
+cmd (PushN n)          = \s -> Just  (Left n : s)
+cmd (PushB n)          = \s -> Just (Right n : s )
+cmd Add                  = \s  -> case s of
+                                                (Left n : Left m: s')  -> Just (Left (n+m)  : s')
+                                                _ -> Nothing
+cmd Equ                  = \s -> case s of
+                                                (Left n : Left m : s') -> Just (Right (n == m) : s')
+                                                (Right b : Right c : s') -> Just (Right( b == c) : s')
+                                                _ -> Nothing
+cmd (IfThenElse t e) = \s -> case s of
+                                                (Right True : s')  -> prog t s'
+                                                (False False : s') -> prog e s'
+                                                _ -> Nothing
+
+
+
+
+-- 8. Define the semantics of a StackLang program
+
+prog :: Prog -> Stack -> Maybe Stack
+prog []  = \s -> Just s
+prog (c:cs) = \s -> case  cmd c s  of
+                                Just s'   -> prog cs s'  
+                                Nothing -> Nothing
 
 
 

@@ -1,0 +1,42 @@
+What is naming?
+
+Most languages provide a way to name and reuse stuff.
+
+Declaration introduce a new name  int x;
+binding associate a name with a thing x = 5;
+reference use the name to stat for the bound thing. x = x + 1
+
+We need to make sure we make a recognize Reference vs Declaration.
+
+let x = slow 42
+in x + x + x
+This example demonstrates Declaration in let x.
+Shows binding in slow 42 and reference in x + x + x and in slow 42.
+
+
+What are type names?
+Declaration
+type Radius = Float 
+Declaration                 Reference.
+data Shape = Circle Radius
+
+Shape and Radius are bound to the types on the right hand side.
+
+area r = pi * r * r
+
+r is a declaration of new parameter r
+area is being bound in this definition.
+r is not being bound in the function it self but in the function call.
+
+We will be asked to distinguish between declaration and reference.
+
+type Env = Name -> Thing
+Envoirnment: a mapping from names to things
+
+Naming concepts
+Declaration add a new name to the Env
+Binding set the thing associated with a name
+reference get the thing assocaiated with a name.
+
+immutables vars (Haskell) Env -> Val evaluating the value on the environment cannot change the environment.
+mutables vars (C java python) Env -> (Env, Val) This can change the environment.
