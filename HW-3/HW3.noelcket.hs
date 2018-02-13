@@ -4,6 +4,8 @@ import MiniMiniLogo
 import Render
 
 
+
+-- 
 --
 -- * Semantics of MiniMiniLogo
 --
@@ -17,6 +19,12 @@ import Render
 
 -- | A type to represent the current state of the pen.
 type State = (Mode,Point)
+
+-- Sutdents in Group:
+-- ONID ID		Full Name
+-- -------      -------------------
+-- noelcket		Thomas Noelcke
+
 
 -- | The initial state of the pen.
 start :: State
