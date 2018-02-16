@@ -79,6 +79,19 @@ stmt (Begin ss)    = \reg ->  foldl (flip stmt) reg ss
 
 
 -- need definition for foldl
+-- This will create an infinite representation of our haskell function.
+
+-- | compute least fix point defined in data.Function.
+fix f = let x = f x in x
+
+-- compositional valuation function for statement using least fix point
+
+-- stmt (While t s)  = fix (\f reg -> if test t reg
+--                                                then f (stmt s reg)
+--                                                 else reg)
+-- apply equational reasoning and this might make sense? But i don't realy care so I'm not going to care about it.
+
+
 
 
 

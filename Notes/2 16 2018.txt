@@ -1,0 +1,125 @@
+Class notes for 2 16 2018
+
+-- Started off class talking about HW4.
+
+-- Lots of stuff ends up being provided for us.
+Haskell function meaning for simple lang:
+
+Add (Lit 3) (Lit 4)
+
+expr(Add (Lit 3) (Lit 4))
+=> \reg -> expr( Lit 3) reg + expr (Lit 3) reg
+=> \reg -> (\reg' -> 3) reg
+                + \reg -> 4) reg
+                
+ represents meaning of function.
+ 
+ 
+ TYPE SYSEMS
+  Much like denotational semantics.
+  
+  Type: a set of syntactic terms. (AST's) that share the same behavior.
+    - Int, Bool, String, Maybe Bool, [[Int]], Int -> Bool
+    - defines the interface for these terms - in what contexts can they appear?
+ Type errors:
+    - Typically a violation of th type interface between terms.
+    - if not caught/prevented, leads to a crash or unpredictable evaluation.
+  
+ Type safety:
+    A type system detects and prevents/reports type errors.
+    
+    a language is type safe if an implementation can detect all the type errors
+        - statically; by proving the absence of type errors
+        - dynamically: by detecting and reporting the type errors at run time.
+     Type safe Languages.
+        - Haskell, SML: Static
+        - Python, Ruby: Dynamic
+        -Java: mixed.
+     Unsafe:
+        - C, C++: Pointers
+        - PHP, Perl, JavaScript: Conversions.
+ 
+ Implicit convert between types is this safe?
+  - ONLY if it's determined by the types, not the runtime values!
+  
+ PHP, Perl (unsafe)
+ n = "4"+ 2
+ s = "Answer" + n
+ 
+ Fun diabolical example.
+ JSFUCK
+ 
+ Static VS dynamic typing.
+ Static typing:
+    - Types are associated with syntactic terms.
+    - Type errors are reported at compile time (prevent execution).
+    - type checker proves that no type errors will occur at runtime.
+
+ Dynamic Typing:
+  - Types are associated with runtime values.
+  - Type errors are reported at runtime (e. g. by throwing an exception)
+  - type checker is integrated into the runtime system.
+  
+ Benefits of static vs dynamic typing:
+  - Usability and comprehension.
+  - Guaranteed to be correct and consistent with implementation.
+  - better tool support
+    * Better tool support
+    * e.g. code completion, navigation.
+   - supports high-level reasoning.
+    * by providing something or another.
+   - A partial correctness proof - no runtime type errors
+    - improves robustness.
+   - Improved code generation
+   - no type erasure
+        - no need for type info.
+        
+ Draw Back:
+    - Conservative.
+ 
+what is the type of this expression? 
+ if 3 > 4 then True else 5
+ A: Static type error: Type error.
+ 
+ Dynamic typing int.
+ 
+ \x -> if x > 4 then True else x + 2
+ 
+ static: Type error!
+ Dynamic: ???
+ 
+ silly examples but:
+    - many advanced type features created to reclaim expressiveness.
+
+    
+ Implementing a type system.
+  Static typing is a static semantics.
+  
+  Dynamic Semantics (AKA execution semantics)
+    - relates to an AST to a value.
+    - Describes meaning.
+ 
+ Static semantics
+  - which programs have meaning?
+  - relates to an AST to a type.
+  - describes meaning of program at compile time.
+ 
+ Defining a static type system.
+ 
+ 1. define the abstract syntax.
+  - the set of AST's
+ 2. define the structure of types, T
+  - another abstract syntax.
+ 3. Define the typing relation, E : T
+
+ 
+ Typing contexts
+ 
+ Often we need to keep track of some information during typing.
+    - types of top-level functions
+    - types of local variables
+    -set of decared classes and their methods.
+    
+    Put this information in the typing context (Environment).
+    variables to types.
+    
