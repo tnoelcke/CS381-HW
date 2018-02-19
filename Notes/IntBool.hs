@@ -124,11 +124,57 @@ or l r = If l true r
 
 --uses all the syntatic sugar.
 ex4 :: Exp
+ex4 = or (not true) 
+               (and (Equ(Neg (Lit 3)) (Lit (-3))
+               (or true false)
+   
 
 -- Syntactic suger is great untill we need to report errors because it makes for long trees of constructs that are not so simple.
 -- We may pay some complexity cost in order to produce useful error messages.
 
 -- *Statically type Stuff*
+data Type = TInt | TBool | TypeError
+            deriving(Eq, Show)
+            
+            
+-- defining the typing relation
+typeOf :: Exp -> Type
+typeOf (Lit i) = TInt
+typeOf (Add l r) = case (typeof l, typeOf r) of
+                               (TInt, TInt) -> TInt
+                               _ -> TypeError
+typeOf (Mul l r) =  case (typeof l, typeOf r) of
+                               (TInt, TInt) -> TInt
+                               _ -> TypeError
+ typeOf (Equ l r) = case (typeOf l, typeOf r) of
+                                    (TInt, TInt) -> TBool
+                                    (TBool, TBool) -> TBool
+                                    _->TypeError
+typeOf(If c t e) = case (typeOf c ,typeOf t, typeOf e) of
+                                                        (TBool, TInt, TInt) -> TInt
+                                                        (TBool, TBool, TBool) -> TBool
+                                                        _-> TypeError
+ 
+
+
+-- define the semantics of type-correct programs
+sem' :: Exp -> Either Int Bool
+sem' (Lit i) = Left i
+sem' (Add l r) = Left(evalInt l + evalInt r)
+sem' (Mul l r) = Left(evalInt l * evalInt r)
+sem' (Equ l r) = Right(sem' l == sem' r)
+sem' (If c t e) =  if evalBool c then sem' t else sem' e
+
+-- look up helper functions for evalBool and evalInt
+
+eval::Exp->Value
+eval e = case typeOf e of
+                    TInt    -> I (evalInt e)
+                     TBool -> B (evalBool e)
+                     TError -> TypeError
+  
+
+
 
 
 
