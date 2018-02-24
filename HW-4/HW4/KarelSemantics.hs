@@ -23,7 +23,7 @@ stmt PickBeeper _ w r = let p = getPos r
                               then OK (decBeeper p w) (incBag r)
                               else Error ("No beeper to pick at: " ++ show p)
 stmt Move _ w r = if (test (Clear Front) w r)  then OK w (updatePos (neighbor (getFacing r)) r)
-                                                                  else Error ("Blocked at:" ++ (neighbor (getFacing r)))
+                                                                  else Error ("Blocked at:" ++ show (neighbor (getFacing r) (getPos r)))
 stmt PutBeeper _ w r = undefined
 stmt (Turn d) _ w r = undefined
 stmt (Call m) d w r = undefined
