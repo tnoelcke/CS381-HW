@@ -1,4 +1,4 @@
-E-- | A module that contains several doctests for testing your interpreter.
+-- | A module that contains several doctests for testing your interpreter.
 --   Note that if you want the tests to pass, you'll need to reverse engineer
 --   the error messages.
 --
