@@ -6,6 +6,12 @@ import Data.Function (fix)
 import KarelSyntax
 import KarelState
 
+-- Sutdents in Group:
+-- ONID ID		Full Name
+-- -------      -------------------
+-- noelcket		Thomas Noelcke
+
+
 
 -- | Valuation function for Test.
 test :: Test -> World -> Robot -> Bool
