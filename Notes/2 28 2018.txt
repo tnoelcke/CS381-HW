@@ -1,0 +1,152 @@
+Question 1 on the Quiz
+
+Data reg = A | B | C
+
+(int, int, int) -> Int
+
+E3 and E4
+Int
+
+Bool
+
+Review of naming.
+
+Scope.
+
+the parts of the program where you can refer to a name.
+Block
+
+function(){
+
+}
+
+Shadowing when a declaration in an inner block temporarily hides a name in an outer block.
+
+int x;
+int y;
+if(x ==3){
+    int x = 4
+    int z = 5
+    y = x
+}
+print(x)
+
+Python Locals
+
+def demo():
+    x = 6
+    if x == 7
+        x = 8
+        y = x
+    print x
+    print y
+    
+Haskell let
+
+let x = 9
+    y = x
+    in let x = 5
+            z = y
+         in(x, y)
+ 
+ Recall 271
+ local variables are stored in a stack frame
+ enter a block push a frame
+ exit a block pop a frame
+ 
+ type = Frame = [(Var, Val)]
+ type Stack = [Frame]
+ 
+ type Env = [(Var, Val)]
+ 
+ flattened out stack of stack frames.
+ 
+ Functions: in the file/module.
+ the argument names (parameters): in the function body.
+ 
+ example:
+ 
+ triple :: Int -> Int
+ 
+ double :: Int -> Int
+ 
+ perimeter :: Int -> Int -> Int
+ 
+ 
+ A function definition contains:
+    * the declariation fo the parameters
+    * references to the paramaters.
+    
+    Paramaters are bound during function call.
+    
+    Double 5 -> x gets bound to 5
+
+    Three kinds of variable names:
+        * Parameters
+        * local variables
+        * external variables.
+        
+Paramaters name find and local name find LOOK AT THE STACK.
+
+External Names? Where do those live?
+
+Static scope: external names refer to variables that are visible at definition.
+
+Dynamic scope: external names refer to variables that are visible at call site.
+
+definition
+
+int x = 3
+int baz(int a){
+    int b = x + a
+    return b;
+}
+ 
+ 
+ call site
+ int x = 4
+ 
+ int y = baz(5)
+ 
+ Static scope 8
+ dynamic scope 9
+ 
+ Static scoping is much better than dynamic scoping. 
+ 
+ Some languages still use dynamic scoping. 
+ 
+ Dynamic scope
+ 
+    References refer to most recent binding during execution.
+    
+    1. Push frame with prameters on to the stack.
+    2. run function body, save return value.
+    3. pop frame form stack and resume executing.
+    
+    Tradoffs:
+    supports ad-hoc extensibility.
+    
+    all names are part of the public interface.
+        risk of name collision and uninteded behavior
+        bad modularity - hard to re factor and understand.
+        
+     References refer to most recent binding in the source code.
+     
+     Preforming a function call.
+        1. Save current stack, restore function's stack.
+        2. Push the frame with parameters on to the stack.
+        3. run function bod, save return value.
+        4. restore saved stack and resume executing.
+        
+        Names not pare of the public interface.
+            no risk of name collision - more predictable behavior.
+            improved mudularity - can change names with out breaking clinets.
+ 
+Closures.
+    Closure = function + its enviornment (Stack)
+    
+    Needed to implement static scoping!
+    
+    
+        
+ 
