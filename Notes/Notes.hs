@@ -16,5 +16,11 @@ data DVal = DI Int              --integer
                   
 dsem :: Exp ->  Env DVal  -> Maybe DVal
 dsem (Lit i)        m = Just (DI i)
-dsem (Add l r)   m = case (dsem l m, dsem r m) of
+dsem (Add l r)   m = case (dsem l m, dsem r m) of 
+                                        (Lit i, Lit j) -> Just (DI (i + j))
+                                        _-> Nothing
+ dsem (Let x b e) m =
+ dsem (Ref x) m   = lookup x m
+ dsem (Fun x e) m = Just (DF x e)
+ dsem (App l r) m =
         
