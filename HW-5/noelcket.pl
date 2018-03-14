@@ -138,4 +138,6 @@ cmd(if(R, L), [f|T], H) :- cmd(L, T, H), cmd(R, T, _).
 % 2. Define the predicate `prog/3`, which describes the effect of executing a
 %    program on the stack.
 
+prog([H|T], S1, S2) :- cmd(H, S1, S3), prog(T, S3, S2).
+
 
