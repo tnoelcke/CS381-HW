@@ -128,11 +128,12 @@ related(X, Y) :- married(Y, X).
 %    command on the stack.
 cmd(N, T, [N|T]) :- number(N).
 cmd(S, T, [S|T]) :- string(S).
-cmd(B, T, [B|T]) :- atom(B).
+cmd(t, T, [t|T]).
+cmd(f, T, [f|T]).
 cmd(add, [L,R|T], [H|T]) :- H is L + R, number(L), number(R).
-cmd(lte, [L,R|T], [H|T]) :- number(L), number(R), H is L =< R.
-
-
+cmd(lte, [L,R|T], [t|T]) :- number(L), number(R), L =< R.
+cmd(if(R, L), [t|T], H) :- cmd(R, T, H), cmd(L, T, _).
+cmd(if(R, L), [f|T], H) :- cmd(L, T, H), cmd(R, T, _).
 
 % 2. Define the predicate `prog/3`, which describes the effect of executing a
 %    program on the stack.
