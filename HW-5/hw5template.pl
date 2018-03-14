@@ -1,3 +1,5 @@
+%Name: Thomas Noelcke ONID: noelcket
+
 % Here are a bunch of facts describing the Simpson's family tree.
 % Don't change them!
 
@@ -121,8 +123,15 @@ related(X, Y) :- married(Y, X).
 % Part 2. Language implementation
 %%
 
+
 % 1. Define the predicate `cmd/3`, which describes the effect of executing a
 %    command on the stack.
+cmd(N, T, [N|T]) :- number(N).
+cmd(S, T, [S|T]) :- string(S).
+cmd(B, T, [B|T]) :- atom(B).
+cmd(add, [L,R|T], [H|T]) :- H is L + R, number(L), number(R).
+cmd(lte, [L,R|T], [H|T]) :- number(L), number(R), H is L =< R.
+
 
 
 % 2. Define the predicate `prog/3`, which describes the effect of executing a
