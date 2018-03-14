@@ -65,7 +65,7 @@ grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
 
 
 % 4. Define a predicate `sibling/2`. Siblings share at least one parent.
-sibling(X, Y) :- parent(Z, X), parent(Z, Y).
+sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
 
 
 % 5. Define two predicates `brother/2` and `sister/2`.
@@ -132,12 +132,13 @@ cmd(t, T, [t|T]).
 cmd(f, T, [f|T]).
 cmd(add, [L,R|T], [H|T]) :- H is L + R, number(L), number(R).
 cmd(lte, [L,R|T], [t|T]) :- number(L), number(R), L =< R.
-cmd(if(R, L), [t|T], H) :- cmd(R, T, H), cmd(L, T, _).
-cmd(if(R, L), [f|T], H) :- cmd(L, T, H), cmd(R, T, _).
+cmd(lte, [L,R|T], [f|T]) :- number(L), number(R), L > R.
+cmd(if(R, _), [t|T], H) :- prog(R, T, H).
+cmd(if(_, L), [f|T], H) :- prog(L, T, H).
 
 % 2. Define the predicate `prog/3`, which describes the effect of executing a
 %    program on the stack.
-
+prog([H], S1, S2) :- cmd(H, S1, S2).
 prog([H|T], S1, S2) :- cmd(H, S1, S3), prog(T, S3, S2).
 
 
